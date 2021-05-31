@@ -6,37 +6,37 @@ React Native lets you customize the navigation bar for Android.
     <tr>
         <td align="center">
             Hide<br />
-            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/hide.png" width="200" />
+            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/hide.png?raw=true" width="200" />
         </td>
         <td align="center">
             Lean Back<br />
-            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/leanBack.gif" width="200" />
+            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/leanBack.gif?raw=true" width="200" />
         </td>
         <td align="center">
             Immersive <br />
-            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/immersive.gif" width="200" />
+            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/immersive.gif?raw=true" width="200" />
         </td>
         <td align="center">
             Sticky Immersive<br />
-            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/stickyImmersive.gif" width="200" />
+            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/stickyImmersive.gif?raw=true" width="200" />
         </td>
     </tr>
     <tr>
         <td align="center">
             Low Profile<br />
-            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/lowProfile.gif" width="200" />
+            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/lowProfile.gif?raw=true" width="200" />
         </td>
         <td align="center">
             Navigation Color<br />
-            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/navigationColor.gif" width="200" />
+            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/navigationColor.gif?raw=true" width="200" />
         </td>
         <td align="center">
             Navigation Bar Divider Color<br />
-            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/navigationBarDividerColor.gif" width="200" />
+            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/navigationBarDividerColor.gif?raw=true" width="200" />
         </td>
         <td align="center">
             Light Navigation Bar<br />
-            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/lightNavigationBar.gif" width="200" />
+            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/lightNavigationBar.gif?raw=true" width="200" />
         </td>
   </tr>
   </table>

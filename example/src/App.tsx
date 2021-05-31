@@ -1,0 +1,123 @@
+import * as React from 'react';
+
+import { StyleSheet, View, Button } from 'react-native';
+import SystemNavigationBar from 'react-native-system-navigation-bar';
+
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <Button
+        title="Hide"
+        onPress={async () => {
+          const result = await SystemNavigationBar.navigationHide();
+
+          console.log('Hide: ', result);
+        }}
+      />
+
+      <Button
+        title="Show"
+        onPress={async () => {
+          const result = await SystemNavigationBar.navigationShow();
+
+          console.log('Show: ', result);
+        }}
+      />
+
+      <Button
+        title="leanBack"
+        onPress={async () => {
+          const result = await SystemNavigationBar.leanBack();
+
+          console.log('leanBack: ', result);
+        }}
+      />
+
+      <Button
+        title="immersive"
+        onPress={async () => {
+          const result = await SystemNavigationBar.immersive();
+
+          console.log('immersive: ', result);
+        }}
+      />
+
+      <Button
+        title="stickyImmersive"
+        onPress={async () => {
+          const result = await SystemNavigationBar.stickyImmersive();
+
+          console.log('stickyImmersive: ', result);
+        }}
+      />
+
+      <Button
+        title="lightNavigationBar"
+        onPress={async () => {
+          const result = await SystemNavigationBar.lightNavigationBar(false);
+
+          console.log('lightNavigationBar: ', result);
+        }}
+      />
+
+      <Button
+        title="fullScreen"
+        onPress={async () => {
+          const result = await SystemNavigationBar.fullScreen(false);
+
+          console.log('fullScreen: ', result);
+        }}
+      />
+
+      <Button
+        title="lowProfile"
+        onPress={async () => {
+          const result = await SystemNavigationBar.lowProfile();
+
+          console.log('lowProfile: ', result);
+        }}
+      />
+
+      <Button
+        title="Color"
+        onPress={async () => {
+          const result = await SystemNavigationBar.setNavigationColor(
+            'red',
+            true
+          );
+
+          console.log('Color: ', result);
+        }}
+      />
+
+      <Button
+        title="Divider Color"
+        onPress={async () => {
+          const result = await SystemNavigationBar.setNavigationBarDividerColor(
+            'red'
+          );
+
+          console.log('Divider Color: ', result);
+        }}
+      />
+      <Button
+        title="Contrast Enforced"
+        onPress={async () => {
+          const result =
+            await SystemNavigationBar.setNavigationBarContrastEnforced(true);
+
+          console.log('Contrast Enforced: ', result);
+        }}
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    backgroundColor: '#FFFF',
+  },
+});

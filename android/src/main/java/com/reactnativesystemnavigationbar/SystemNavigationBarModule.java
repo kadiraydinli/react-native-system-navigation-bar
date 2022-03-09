@@ -104,8 +104,7 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
     public void setNavigationColor(Integer color, Boolean isTranslucent, Boolean light, Promise promise) {
         try {
             if (getCurrentActivity().getWindow() == null) {
-                Log.d("TAG", "setNavigationColor: ");
-                promise.reject("Error: ", "false");
+                 promise.reject("Error: ", "false");
                 return;
             }
             final Window view = getCurrentActivity().getWindow();
@@ -181,8 +180,7 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
     public void setNavigationBarContrastEnforced(Boolean enforceContrast, Promise promise) {
         try {
             if (getCurrentActivity().getWindow() == null) {
-                Log.d("TAG", "setNavigationColor: ");
-                promise.reject("Error: ", "false");
+                 promise.reject("Error: ", "false");
                 return;
             }
             final Window view = getCurrentActivity().getWindow();
@@ -203,8 +201,7 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
         try {
             runOnUiThread(() -> {
                 if (getCurrentActivity().getWindow() == null) {
-                    Log.d("TAG", "setNavigationColor: ");
-                    promise.reject("Error: ", "false");
+                     promise.reject("Error: ", "false");
                     return;
                 }
                 View decorView = getCurrentActivity().getWindow().getDecorView();
@@ -223,8 +220,7 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
             runOnUiThread(() -> {
                 if (Build.VERSION.SDK_INT >= 26) {
                     if (getCurrentActivity().getWindow() == null) {
-                        Log.d("TAG", "setNavigationColor: ");
-                        promise.reject("Error: ", "false");
+                         promise.reject("Error: ", "false");
                         return;
                     }
                     View decorView = getCurrentActivity().getWindow().getDecorView();

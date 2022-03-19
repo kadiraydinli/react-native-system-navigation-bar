@@ -26,6 +26,8 @@ yarn-error.log
 # BUCK
 buck-out/
 \.buckd/
+example/android/app/build
+android/build
 android/app/libs
 android/keystores/debug.keystore
 

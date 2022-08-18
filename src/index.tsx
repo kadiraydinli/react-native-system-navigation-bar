@@ -38,18 +38,52 @@ const lowProfile = async () => {
   }
 };
 
-const lightNavigationBar = async (light?: boolean) => {
+const getBarModeTypes = (
+  style?: 'light' | 'dark',
+  bar?: 'navigation' | 'status' | 'both'
+) => {
+  const modeStyle =
+    style === 'light'
+      ? NavigationBar.LIGHT
+      : style === 'dark'
+      ? NavigationBar.DARK
+      : NavigationBar.NO_MODE;
+
+  const mode =
+    bar === 'navigation'
+      ? NavigationBar.NAVIGATION_BAR
+      : bar === 'status'
+      ? NavigationBar.STATUS_BAR
+      : NavigationBar.NAVIGATION_BAR_STATUS_BAR;
+
+  return {
+    modeStyle,
+    mode,
+  };
+};
+
+const setBarMode = async (
+  style?: 'light' | 'dark',
+  bar?: 'navigation' | 'status' | 'both'
+) => {
   if (Platform.OS === 'android') {
-    return await NavigationBar.lightNavigationBar(light || false);
+    const { modeStyle, mode } = getBarModeTypes(style, bar);
+    return await NavigationBar.setBarMode(modeStyle, mode);
   }
 };
 
-const setNavigationColor = async (color: string | number, light?: boolean) => {
+const setNavigationColor = async (
+  color: string | number,
+  style?: 'light' | 'dark',
+  bar?: 'navigation' | 'status' | 'both'
+) => {
   if (Platform.OS === 'android') {
+    const { modeStyle, mode } = getBarModeTypes(style, bar);
     return await NavigationBar.setNavigationColor(
       processColor(color),
       color === 'translucent',
-      light || false
+      modeStyle,
+      mode
     );
   }
 };
@@ -83,7 +117,7 @@ var SystemNavigationBar = {
   immersive,
   stickyImmersive,
   lowProfile,
-  lightNavigationBar,
+  setBarMode,
   setNavigationColor,
   setNavigationBarDividerColor,
   setNavigationBarContrastEnforced,

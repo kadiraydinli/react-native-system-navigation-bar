@@ -6,11 +6,11 @@ React Native lets you customize the navigation bar for Android.
     <tr>
         <td align="center">
             Hide<br />
-            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/hide.png?raw=true" width="200" />
+            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/hide.gif?raw=true" width="200" />
         </td>
         <td align="center">
             Lean Back<br />
-            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/leanBack.gif?raw=true" width="200" />
+            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/lean-back.gif?raw=true" width="200" />
         </td>
         <td align="center">
             Immersive <br />
@@ -18,25 +18,25 @@ React Native lets you customize the navigation bar for Android.
         </td>
         <td align="center">
             Sticky Immersive<br />
-            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/stickyImmersive.gif?raw=true" width="200" />
+            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/sticky-immersive.gif?raw=true" width="200" />
         </td>
     </tr>
     <tr>
         <td align="center">
             Low Profile<br />
-            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/lowProfile.gif?raw=true" width="200" />
+            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/low-profile.gif?raw=true" width="200" />
         </td>
         <td align="center">
             Navigation Color<br />
-            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/navigationColor.gif?raw=true" width="200" />
+            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/navigation-color.gif?raw=true" width="200" />
         </td>
         <td align="center">
             Navigation Bar Divider Color<br />
-            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/navigationBarDividerColor.gif?raw=true" width="200" />
+            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/divider-color.gif?raw=true" width="200" />
         </td>
         <td align="center">
             Light Navigation Bar<br />
-            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/lightNavigationBar.gif?raw=true" width="200" />
+            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/bar-mode.gif?raw=true" width="200" />
         </td>
   </tr>
   </table>
@@ -94,17 +94,19 @@ import SystemNavigationBar from 'react-native-system-navigation-bar';
 SystemNavigationBar.stickyImmersive();
 ```
 
-#### `lightNavigationBar()`
+#### `setBarMode()`
 
 Navigation bar and status changes to bar style.
 
-| Type  | Reqired | Default |
-| ------------- | ------------- | ------------- |
-| boolean  | No | false |
+|Name | Type  | Reqired | Default |
+| ------------- | ------------- | ------------- | ------------- |
+| Bar Mode Style | light - dark  | No | |
+| Bar Mode | status - navigation - both  | No | both |
 ```js
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 
-SystemNavigationBar.lightNavigationBar(true);
+SystemNavigationBar.setBarMode('light');
+SystemNavigationBar.setBarMode('dark', 'navigation');
 ```
 
 #### `fullScreen()`
@@ -136,13 +138,17 @@ Changes the color of the navigation bar. It also changes the style of the status
 |Name | Type  | Reqired | Default |
 | ------------- | ------------- | ------------- | ------------- |
 | Color | RGB - HSL - Color Ints  | Yes | |
-| Light Bar | boolean  | No | false |
+| Bar Mode Style | light - dark  | No | |
+| Bar Mode | status - navigation - both  | No | both |
 ```js
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 
 SystemNavigationBar.setNavigationColor('red');
-SystemNavigationBar.setNavigationColor('#FF0000', true);
-SystemNavigationBar.setNavigationColor(0xff00ff00, false);
+SystemNavigationBar.setNavigationColor('#FF0000', 'light');
+SystemNavigationBar.setNavigationColor(0xff00ff00, 'dark');
+SystemNavigationBar.setNavigationColor('blue', 'dark', 'status');
+SystemNavigationBar.setNavigationColor('green', 'light', 'navigation');
+SystemNavigationBar.setNavigationColor('yellow', 'light', 'both');
 SystemNavigationBar.setNavigationColor('hsla(110, 56%, 49%, 0.5)');
 ```
 

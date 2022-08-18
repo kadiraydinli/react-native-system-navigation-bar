@@ -52,11 +52,11 @@ export default function App() {
       />
 
       <Button
-        title="lightNavigationBar"
+        title="setBarMode"
         onPress={async () => {
-          const result = await SystemNavigationBar.lightNavigationBar(false);
+          const result = await SystemNavigationBar.setBarMode('dark');
 
-          console.log('lightNavigationBar: ', result);
+          console.log('setBarMode: ', result);
         }}
       />
 
@@ -81,10 +81,7 @@ export default function App() {
       <Button
         title="Color"
         onPress={async () => {
-          const result = await SystemNavigationBar.setNavigationColor(
-            'red',
-            true
-          );
+          const result = await SystemNavigationBar.setNavigationColor('red');
 
           console.log('Color: ', result);
         }}

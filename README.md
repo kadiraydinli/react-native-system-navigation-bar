@@ -35,7 +35,7 @@ React Native lets you customize the navigation bar for Android.
             <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/divider-color.gif?raw=true" width="200" />
         </td>
         <td align="center">
-            Light Navigation Bar<br />
+            Bar Mode<br />
             <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/bar-mode.gif?raw=true" width="200" />
         </td>
   </tr>

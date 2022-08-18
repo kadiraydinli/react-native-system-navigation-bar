@@ -11,10 +11,17 @@ jsconfig.json
 
 # Android/IJ
 #
-.idea
+.classpath
+.cxx
 .gradle
+.idea
+.project
+.settings
 local.properties
 android.iml
+
+# Ruby
+example/vendor/
 
 # node.js
 #

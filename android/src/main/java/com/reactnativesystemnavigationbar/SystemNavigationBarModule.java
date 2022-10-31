@@ -2,6 +2,7 @@ package com.reactnativesystemnavigationbar;
 
 import static com.facebook.react.bridge.UiThreadUtil.runOnUiThread;
 
+import android.app.Activity;
 import android.os.Build;
 import android.view.View;
 import android.view.Window;
@@ -146,11 +147,12 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
         promise.reject("Error: ", "false");
         return;
       }
-      if (getCurrentActivity() == null) {
+      final Activity currentActivity = getCurrentActivity();
+      if (currentActivity == null) {
         promise.reject("Error: ", "false");
         return;
       }
-      final Window view = getCurrentActivity().getWindow();
+      final Window view = currentActivity.getWindow();
 
       runOnUiThread(
         () -> {
@@ -211,11 +213,12 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
         promise.reject("Error: ", "false");
         return;
       }
-      if (getCurrentActivity() == null) {
+      final Activity currentActivity = getCurrentActivity();
+      if (currentActivity == null) {
         promise.reject("Error: ", "false");
         return;
       }
-      final Window view = getCurrentActivity().getWindow();
+      final Window view = currentActivity.getWindow();
       runOnUiThread(
         () -> {
           if (Build.VERSION.SDK_INT >= 28) {
@@ -247,11 +250,12 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
         promise.reject("Error: ", "false");
         return;
       }
-      if (getCurrentActivity() == null) {
+      final Activity currentActivity = getCurrentActivity();
+      if (currentActivity == null) {
         promise.reject("Error: ", "false");
         return;
       }
-      final Window view = getCurrentActivity().getWindow();
+      final Window view = currentActivity.getWindow();
       runOnUiThread(
         () -> {
           if (Build.VERSION.SDK_INT >= 29) {
@@ -275,11 +279,12 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
             promise.reject("Error: ", "false");
             return;
           }
-          if (getCurrentActivity() == null) {
+          Activity currentActivity = getCurrentActivity();
+          if (currentActivity == null) {
             promise.reject("Error: ", "false");
             return;
           }
-          View decorView = getCurrentActivity().getWindow().getDecorView();
+          View decorView = currentActivity.getWindow().getDecorView();
 
           decorView.setSystemUiVisibility(visibility);
         }

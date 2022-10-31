@@ -1,6 +1,6 @@
 {
   "name": "react-native-system-navigation-bar",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "React Native lets you customize the navigation bar for Android.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",

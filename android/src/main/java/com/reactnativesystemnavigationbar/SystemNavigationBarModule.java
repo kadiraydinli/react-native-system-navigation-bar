@@ -323,11 +323,12 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
       }
     }
   }
+
   private void setModeStyle(Boolean light, Integer bar, Promise promise) {
     try {
       runOnUiThread(
         () -> {
-          setModeStyle(light, bar)
+          setModeStyle(light, bar);
           promise.resolve("true");
         }
       );

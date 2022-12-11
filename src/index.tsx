@@ -80,7 +80,7 @@ const setNavigationColor = async (
   if (Platform.OS === 'android') {
     const { modeStyle, mode } = getBarModeTypes(style, bar);
     return await NavigationBar.setNavigationColor(
-      processColor(color),
+      color === 'translucent' ? 0 : processColor(color),
       color === 'translucent',
       modeStyle,
       mode

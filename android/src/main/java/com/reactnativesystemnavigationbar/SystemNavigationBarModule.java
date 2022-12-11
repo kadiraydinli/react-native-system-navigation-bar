@@ -193,7 +193,7 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
 
           if (modeStyle != NO_MODE) {
             Boolean isLight = modeStyle.equals(LIGHT);
-            setModeStyle(!isLight, bar, promise);
+            setModeStyle(!isLight, bar);
           }
         }
       );
@@ -308,26 +308,27 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
     decorView.setSystemUiVisibility(bit);
   }
 
+  private void setModeStyle(Boolean light, Integer bar) {
+    if (Build.VERSION.SDK_INT >= 26) {
+      if (getCurrentActivity() == null) {
+        throw new IllegalViewOperationException("current activity is null");
+      }
+
+      if (bar.equals(NAVIGATION_BAR)) {
+        setBarStyle(light, View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+      } else if (bar.equals(STATUS_BAR)) {
+        setBarStyle(light, View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+      } else if (bar.equals(NAVIGATION_BAR_STATUS_BAR)) {
+        setBarStyle(light, View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+      }
+    }
+  }
   private void setModeStyle(Boolean light, Integer bar, Promise promise) {
     try {
       runOnUiThread(
         () -> {
-          if (Build.VERSION.SDK_INT >= 26) {
-            if (getCurrentActivity() == null) {
-              promise.reject("Error: ", "false");
-              return;
-            }
-
-            if (bar.equals(NAVIGATION_BAR)) {
-              setBarStyle(light, View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
-            } else if (bar.equals(STATUS_BAR)) {
-              setBarStyle(light, View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            } else if (bar.equals(NAVIGATION_BAR_STATUS_BAR)) {
-              setBarStyle(light, View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            }
-
-            promise.resolve("true");
-          }
+          setModeStyle(light, bar)
+          promise.resolve("true");
         }
       );
     } catch (IllegalViewOperationException e) {

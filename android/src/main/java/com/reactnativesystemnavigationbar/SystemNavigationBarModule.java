@@ -16,17 +16,18 @@ import com.facebook.react.module.annotations.ReactModule;
 import com.facebook.react.uimanager.IllegalViewOperationException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @ReactModule(name = SystemNavigationBarModule.NAME)
 public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
 
   public static final String NAME = "NavigationBar";
-  public static final int NO_MODE = -1;
-  public static final int LIGHT = 0;
-  public static final int DARK = 1;
-  public static final int NAVIGATION_BAR = 2;
-  public static final int STATUS_BAR = 3;
-  public static final int NAVIGATION_BAR_STATUS_BAR = 4;
+  public static final Integer NO_MODE = -1;
+  public static final Integer LIGHT = 0;
+  public static final Integer DARK = 1;
+  public static final Integer NAVIGATION_BAR = 2;
+  public static final Integer STATUS_BAR = 3;
+  public static final Integer NAVIGATION_BAR_STATUS_BAR = 4;
 
   public SystemNavigationBarModule(ReactApplicationContext reactContext) {
     super(reactContext);
@@ -128,7 +129,7 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void setBarMode(Integer modeStyle, Integer bar, Promise promise) {
-    Boolean isLight = modeStyle.equals(LIGHT);
+    boolean isLight = modeStyle.equals(LIGHT);
     setModeStyle(!isLight, bar, promise);
   }
 
@@ -142,13 +143,14 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
     Promise promise
   ) {
     try {
-      if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-        promise.reject("Error: ", "false");
+      int requiredVersion = Build.VERSION_CODES.LOLLIPOP;
+      if (Build.VERSION.SDK_INT < requiredVersion) {
+        promise.reject("Error: ", errorMessage(requiredVersion));
         return;
       }
       final Activity currentActivity = getCurrentActivity();
       if (currentActivity == null) {
-        promise.reject("Error: ", "false");
+        promise.reject("Error: ", "current activity is null");
         return;
       }
       final Window view = currentActivity.getWindow();
@@ -172,27 +174,10 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
             );
           }
 
-          if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
-            WindowManager.LayoutParams winParams = view.getAttributes();
-            int bit =
-              WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS |
-              WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
-            if (modeStyle != NO_MODE) {
-              if (modeStyle.equals(LIGHT)) {
-                winParams.flags |= bit;
-              } else {
-                winParams.flags &= ~bit;
-              }
-            }
-            view.setAttributes(winParams);
-          }
+          view.setNavigationBarColor(color);
 
-          if (Build.VERSION.SDK_INT >= 21) {
-            view.setNavigationBarColor(color);
-          }
-
-          if (modeStyle != NO_MODE) {
-            Boolean isLight = modeStyle.equals(LIGHT);
+          if (!Objects.equals(modeStyle, NO_MODE)) {
+            boolean isLight = modeStyle.equals(LIGHT);
             setModeStyle(!isLight, bar);
           }
         }
@@ -200,7 +185,7 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
       promise.resolve("true");
     } catch (IllegalViewOperationException e) {
       e.printStackTrace();
-      promise.reject("Error: ", "false");
+      promise.reject("Error: ", e.getMessage());
     }
   }
 
@@ -208,33 +193,32 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void setNavigationBarDividerColor(Integer color, Promise promise) {
     try {
-      if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-        promise.reject("Error: ", "false");
+      int requiredVersion = Build.VERSION_CODES.P;
+      if (Build.VERSION.SDK_INT < requiredVersion) {
+        promise.reject("Error: ", errorMessage(requiredVersion));
         return;
       }
       final Activity currentActivity = getCurrentActivity();
       if (currentActivity == null) {
-        promise.reject("Error: ", "false");
+        promise.reject("Error: ", "current activity is null");
         return;
       }
       final Window view = currentActivity.getWindow();
       runOnUiThread(
         () -> {
-          if (Build.VERSION.SDK_INT >= 28) {
-            view.setNavigationBarDividerColor(color);
-            view
-              .getDecorView()
-              .setSystemUiVisibility(
-                WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS |
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
-              );
-          }
+          view.setNavigationBarDividerColor(color);
+          view
+            .getDecorView()
+            .setSystemUiVisibility(
+              WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS |
+              WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+            );
         }
       );
       promise.resolve("true");
     } catch (IllegalViewOperationException e) {
       e.printStackTrace();
-      promise.reject("Error: ", "false");
+      promise.reject("Error: ", e.getMessage());
     }
   }
 
@@ -245,27 +229,24 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
     Promise promise
   ) {
     try {
-      if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-        promise.reject("Error: ", "false");
+      int requiredVersion = Build.VERSION_CODES.Q;
+      if (Build.VERSION.SDK_INT < requiredVersion) {
+        promise.reject("Error: ", errorMessage(requiredVersion));
         return;
       }
       final Activity currentActivity = getCurrentActivity();
       if (currentActivity == null) {
-        promise.reject("Error: ", "false");
+        promise.reject("Error: ", "current activity is null");
         return;
       }
       final Window view = currentActivity.getWindow();
       runOnUiThread(
-        () -> {
-          if (Build.VERSION.SDK_INT >= 29) {
-            view.setNavigationBarContrastEnforced(enforceContrast);
-          }
-        }
+        () -> view.setNavigationBarContrastEnforced(enforceContrast)
       );
       promise.resolve("true");
     } catch (IllegalViewOperationException e) {
       e.printStackTrace();
-      promise.reject("Error: ", "false");
+      promise.reject("Error: ", e.getMessage());
     }
   }
 
@@ -274,13 +255,14 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
     try {
       runOnUiThread(
         () -> {
-          if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            promise.reject("Error: ", "false");
+          int requiredVersion = Build.VERSION_CODES.LOLLIPOP;
+          if (Build.VERSION.SDK_INT < requiredVersion) {
+            promise.reject("Error: ", errorMessage(requiredVersion));
             return;
           }
           Activity currentActivity = getCurrentActivity();
           if (currentActivity == null) {
-            promise.reject("Error: ", "false");
+            promise.reject("Error: ", "current activity is null");
             return;
           }
           View decorView = currentActivity.getWindow().getDecorView();
@@ -291,11 +273,14 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
       promise.resolve("true");
     } catch (IllegalViewOperationException e) {
       e.printStackTrace();
-      promise.reject("Error: ", "false");
+      promise.reject("Error: ", e.getMessage());
     }
   }
 
   private void setBarStyle(Boolean light, int visibility) {
+    if (getCurrentActivity() == null) {
+      throw new IllegalViewOperationException("current activity is null");
+    }
     View decorView = getCurrentActivity().getWindow().getDecorView();
     int bit = decorView.getSystemUiVisibility();
 
@@ -309,7 +294,7 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
   }
 
   private void setModeStyle(Boolean light, Integer bar) {
-    if (Build.VERSION.SDK_INT >= 26) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
       if (getCurrentActivity() == null) {
         throw new IllegalViewOperationException("current activity is null");
       }
@@ -333,7 +318,11 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
         }
       );
     } catch (IllegalViewOperationException e) {
-      promise.reject("Error: ", "false");
+      promise.reject("Error: ", e.getMessage());
     }
+  }
+
+  private String errorMessage(int version) {
+    return "Your device version: " + Build.VERSION.SDK_INT + ". Supported API Level: " + version;
   }
 }

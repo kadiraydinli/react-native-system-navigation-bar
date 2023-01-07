@@ -19,6 +19,7 @@ jsconfig.json
 .settings
 local.properties
 android.iml
+*.hprof
 
 # Ruby
 example/vendor/

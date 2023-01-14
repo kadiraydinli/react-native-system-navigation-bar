@@ -1,5 +1,8 @@
 # react-native-system-navigation-bar
 
+![npm month downloads](https://badgen.net/npm/dm/react-native-system-navigation-bar)
+![npm all time downloads](https://badgen.net/npm/dt/react-native-system-navigation-bar)
+
 React Native lets you customize the navigation bar for Android.
 
 <table>

@@ -266,11 +266,10 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
             return;
           }
           View decorView = currentActivity.getWindow().getDecorView();
-
           decorView.setSystemUiVisibility(visibility);
+          promise.resolve("true");
         }
       );
-      promise.resolve("true");
     } catch (IllegalViewOperationException e) {
       e.printStackTrace();
       promise.reject("Error: ", e.getMessage());

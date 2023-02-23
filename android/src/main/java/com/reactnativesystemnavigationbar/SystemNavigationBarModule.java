@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.os.Build;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import com.facebook.react.bridge.Promise;
@@ -276,35 +277,52 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
     }
   }
 
-  private void setBarStyle(Boolean light, int visibility) {
+  private void setModeStyle(Boolean light, Integer bar) {
     if (getCurrentActivity() == null) {
       throw new IllegalViewOperationException("current activity is null");
     }
-    View decorView = getCurrentActivity().getWindow().getDecorView();
-    int bit = decorView.getSystemUiVisibility();
+    int visibility = 0;
 
-    if (light) {
-      bit |= visibility;
-    } else {
-      bit &= ~visibility;
-    }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+      WindowInsetsController insetsController = getCurrentActivity().getWindow().getInsetsController();
+      int navigationBarAppearance = WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS;
+      int statusBarAppearance = WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
+      int bothBarAppearance = statusBarAppearance | navigationBarAppearance;
 
-    decorView.setSystemUiVisibility(bit);
-  }
+      if (insetsController != null) {
+        if (bar.equals(NAVIGATION_BAR)) {
+          visibility = navigationBarAppearance;
+        } else if (bar.equals(STATUS_BAR)) {
+          visibility = statusBarAppearance;
+        } else if (bar.equals(NAVIGATION_BAR_STATUS_BAR)) {
+          visibility = bothBarAppearance;
+        }
 
-  private void setModeStyle(Boolean light, Integer bar) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-      if (getCurrentActivity() == null) {
-        throw new IllegalViewOperationException("current activity is null");
+        if (light) {
+          insetsController.setSystemBarsAppearance(visibility, visibility);
+        } else {
+          insetsController.setSystemBarsAppearance(0, visibility);
+        }
       }
+    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      View decorView = getCurrentActivity().getWindow().getDecorView();
+      int bit = decorView.getSystemUiVisibility();
 
       if (bar.equals(NAVIGATION_BAR)) {
-        setBarStyle(light, View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        visibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
       } else if (bar.equals(STATUS_BAR)) {
-        setBarStyle(light, View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        visibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
       } else if (bar.equals(NAVIGATION_BAR_STATUS_BAR)) {
-        setBarStyle(light, View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        visibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
       }
+
+      if (light) {
+        bit |= visibility;
+      } else {
+        bit &= ~visibility;
+      }
+
+      decorView.setSystemUiVisibility(bit);
     }
   }
 

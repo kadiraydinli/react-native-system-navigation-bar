@@ -163,12 +163,7 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
             WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
           );
 
-          if (color.equals(0)) {
-            view.setFlags(
-              WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-              WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-            );
-          } else if (isTranslucent) {
+          if (isTranslucent) {
             view.setFlags(
               WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
               WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION

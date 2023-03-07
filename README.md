@@ -186,7 +186,7 @@ const statusBarColor: string = await SystemNavigationBar.getBarColor('status'); 
 const navigationBarColor: string = await SystemNavigationBar.getBarColor('navigation'); // #FF0000
 ```
 
-If the `both` option is selected, the colors of both the status bar and the navigation bar will return as JSON.
+If the `both` option is selected, the colors of both the status bar and the navigation bar will return as Object.
 
 ```js
 import SystemNavigationBar, { GetBarColorType } from 'react-native-system-navigation-bar';

@@ -16,7 +16,7 @@ const navigationShow = async () => {
 
 const leanBack = async (enabled?: boolean) => {
   if (Platform.OS === 'android') {
-    const state = typeof enabled === 'boolean' ? enabled : true; 
+    const state = typeof enabled === 'boolean' ? enabled : true;
     return await NavigationBar.leanBack(state);
   }
 };
@@ -29,14 +29,14 @@ const immersive = async () => {
 
 const stickyImmersive = async (enabled?: boolean) => {
   if (Platform.OS === 'android') {
-    const state = typeof enabled === 'boolean' ? enabled : true; 
+    const state = typeof enabled === 'boolean' ? enabled : true;
     return await NavigationBar.stickyImmersive(state);
   }
 };
 
 const lowProfile = async (enabled?: boolean) => {
   if (Platform.OS === 'android') {
-    const state = typeof enabled === 'boolean' ? enabled : true; 
+    const state = typeof enabled === 'boolean' ? enabled : true;
     return await NavigationBar.lowProfile(state);
   }
 };
@@ -101,24 +101,25 @@ const setNavigationBarDividerColor = async (color: string | number) => {
 
 const setNavigationBarContrastEnforced = async (enabled?: boolean) => {
   if (Platform.OS === 'android') {
-    const state = typeof enabled === 'boolean' ? enabled : true; 
+    const state = typeof enabled === 'boolean' ? enabled : true;
     return await NavigationBar.setNavigationBarContrastEnforced(state);
   }
 };
 
 const fullScreen = async (enabled?: boolean) => {
   if (Platform.OS === 'android') {
-    const state = typeof enabled === 'boolean' ? enabled : true; 
+    const state = typeof enabled === 'boolean' ? enabled : true;
     return await NavigationBar.fullScreen(state);
   }
 };
 
-export type GetBarColorType = string | {status: string; navigation: string; };
+export type GetBarColorType = string | { status: string; navigation: string };
 
 const getBarColor = async (
-  bar?: 'navigation' | 'status' | 'both'): Promise<GetBarColorType> => {
+  bar?: 'navigation' | 'status' | 'both'
+): Promise<GetBarColorType> => {
   if (Platform.OS === 'android') {
-    const { mode } = getBarModeTypes("light", bar || "both");
+    const { mode } = getBarModeTypes('light', bar || 'both');
     const result = await NavigationBar.getBarColor(mode);
 
     if (mode === NavigationBar.NAVIGATION_BAR_STATUS_BAR) {
@@ -127,7 +128,7 @@ const getBarColor = async (
       return result;
     }
   }
-  return "";
+  return '';
 };
 
 var SystemNavigationBar = {

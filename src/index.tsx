@@ -113,6 +113,23 @@ const fullScreen = async (enabled?: boolean) => {
   }
 };
 
+export type GetBarColorType = string | {status: string; navigation: string; };
+
+const getBarColor = async (
+  bar?: 'navigation' | 'status' | 'both'): Promise<GetBarColorType> => {
+  if (Platform.OS === 'android') {
+    const { mode } = getBarModeTypes("light", bar || "both");
+    const result = await NavigationBar.getBarColor(mode);
+
+    if (mode === NavigationBar.NAVIGATION_BAR_STATUS_BAR) {
+      return JSON.parse(result);
+    } else {
+      return result;
+    }
+  }
+  return "";
+};
+
 var SystemNavigationBar = {
   navigationHide,
   navigationShow,
@@ -125,6 +142,7 @@ var SystemNavigationBar = {
   setNavigationBarDividerColor,
   setNavigationBarContrastEnforced,
   fullScreen,
+  getBarColor,
 };
 
 export default SystemNavigationBar;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Button } from 'react-native';
-import SystemNavigationBar from 'react-native-system-navigation-bar';
+import SystemNavigationBar, { GetBarColorType } from 'react-native-system-navigation-bar';
 
 export default function App() {
   return (
@@ -97,6 +97,7 @@ export default function App() {
           console.log('Divider Color: ', result);
         }}
       />
+      
       <Button
         title="Contrast Enforced"
         onPress={async () => {
@@ -104,6 +105,14 @@ export default function App() {
             await SystemNavigationBar.setNavigationBarContrastEnforced(true);
 
           console.log('Contrast Enforced: ', result);
+        }}
+      />
+      
+      <Button
+        title="Get Bar Color"
+        onPress={async () => {
+          const result: GetBarColorType = await SystemNavigationBar.getBarColor("both");
+          console.log('Get Bar Color: ', JSON.stringify(result));
         }}
       />
     </View>

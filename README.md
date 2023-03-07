@@ -172,6 +172,29 @@ SystemNavigationBar.setNavigationColor('yellow', 'light', 'both');
 SystemNavigationBar.setNavigationColor('hsla(110, 56%, 49%, 0.5)');
 ```
 
+#### `getBarColor()`
+
+It allows you to access the color of the navigation bar, status bar or both bars as hex color.
+
+|Name | Type  | Reqired | Default |
+| ------------- | ------------- | ------------- | ------------- |
+| Bar | status - navigation - both  | No | both |
+```js
+import SystemNavigationBar from 'react-native-system-navigation-bar';
+
+const statusBarColor: string = await SystemNavigationBar.getBarColor('status'); // #757575
+const navigationBarColor: string = await SystemNavigationBar.getBarColor('navigation'); // #FF0000
+```
+
+If the `both` option is selected, the colors of both the status bar and the navigation bar will return as JSON.
+
+```js
+import SystemNavigationBar, { GetBarColorType } from 'react-native-system-navigation-bar';
+
+const barColors: GetBarColorType = await SystemNavigationBar.getBarColor('both');
+// { "status": "#757575", "navigation": "#FF0000" }
+```
+
 #### `setNavigationBarDividerColor()`
 
 > Only API Level 28 (Android 9) and higher is supported.

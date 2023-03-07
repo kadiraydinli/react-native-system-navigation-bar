@@ -200,7 +200,6 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
         return;
       }
       final Window view = currentActivity.getWindow();
-
       runOnUiThread(
         () -> {
           view.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -228,6 +227,42 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
       e.printStackTrace();
       promise.reject("Error: ", e.getMessage());
     }
+  }
+
+  @ReactMethod
+  public void getBarColor(Integer bar, Promise promise) {
+    runOnUiThread(() -> {
+      try {
+        int requiredVersion = Build.VERSION_CODES.LOLLIPOP;
+        if (Build.VERSION.SDK_INT < requiredVersion) {
+          promise.reject("Error: ", errorMessage(requiredVersion));
+          return;
+        }
+        final Activity currentActivity = getCurrentActivity();
+        if (currentActivity == null) {
+          promise.reject("Error: ", "current activity is null");
+          return;
+        }
+        final Window view = currentActivity.getWindow();
+
+        int navigationColor = view.getNavigationBarColor();
+        int statusColor = view.getStatusBarColor();
+
+        if (bar.equals(STATUS_BAR)) {
+          promise.resolve(convertColorToHexCode(statusColor));
+        } else if (bar.equals(NAVIGATION_BAR)) {
+          promise.resolve(convertColorToHexCode(navigationColor));
+        } else if (bar.equals(NAVIGATION_BAR_STATUS_BAR)) {
+          String hexStatusColor = convertColorToHexCode(statusColor);
+          String hexNavigationColor = convertColorToHexCode(navigationColor);
+          String result = String.format("{ \"status\": \"%s\", \"navigation\": \"%s\" }", hexStatusColor, hexNavigationColor);
+          promise.resolve(result);
+        }
+      } catch (IllegalViewOperationException e) {
+        e.printStackTrace();
+        promise.reject("Error: ", e.getMessage());
+      }
+    });
   }
 
   /* Set NavigationBar Divider Color */
@@ -420,5 +455,9 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
 
   private String errorMessage(int version) {
     return "Your device version: " + Build.VERSION.SDK_INT + ". Supported API Level: " + version;
+  }
+
+  private String convertColorToHexCode(int color) {
+    return String.format("#%06X", (0xFFFFFF & color));
   }
 }

@@ -14,9 +14,10 @@ const navigationShow = async () => {
   }
 };
 
-const leanBack = async () => {
+const leanBack = async (enabled?: boolean) => {
   if (Platform.OS === 'android') {
-    return await NavigationBar.leanBack();
+    const state = typeof enabled === 'boolean' ? enabled : true; 
+    return await NavigationBar.leanBack(state);
   }
 };
 
@@ -26,15 +27,17 @@ const immersive = async () => {
   }
 };
 
-const stickyImmersive = async () => {
+const stickyImmersive = async (enabled?: boolean) => {
   if (Platform.OS === 'android') {
-    return await NavigationBar.stickyImmersive();
+    const state = typeof enabled === 'boolean' ? enabled : true; 
+    return await NavigationBar.stickyImmersive(state);
   }
 };
 
-const lowProfile = async () => {
+const lowProfile = async (enabled?: boolean) => {
   if (Platform.OS === 'android') {
-    return await NavigationBar.lowProfile();
+    const state = typeof enabled === 'boolean' ? enabled : true; 
+    return await NavigationBar.lowProfile(state);
   }
 };
 
@@ -96,17 +99,17 @@ const setNavigationBarDividerColor = async (color: string | number) => {
   }
 };
 
-const setNavigationBarContrastEnforced = async (enforceContrast?: boolean) => {
+const setNavigationBarContrastEnforced = async (enabled?: boolean) => {
   if (Platform.OS === 'android') {
-    return await NavigationBar.setNavigationBarContrastEnforced(
-      enforceContrast || false
-    );
+    const state = typeof enabled === 'boolean' ? enabled : true; 
+    return await NavigationBar.setNavigationBarContrastEnforced(state);
   }
 };
 
-const fullScreen = async (enable?: boolean) => {
+const fullScreen = async (enabled?: boolean) => {
   if (Platform.OS === 'android') {
-    return await NavigationBar.fullScreen(enable || false);
+    const state = typeof enabled === 'boolean' ? enabled : true; 
+    return await NavigationBar.fullScreen(state);
   }
 };
 

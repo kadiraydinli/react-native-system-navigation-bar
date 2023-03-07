@@ -63,7 +63,7 @@ export default function App() {
       <Button
         title="fullScreen"
         onPress={async () => {
-          const result = await SystemNavigationBar.fullScreen(false);
+          const result = await SystemNavigationBar.fullScreen();
 
           console.log('fullScreen: ', result);
         }}

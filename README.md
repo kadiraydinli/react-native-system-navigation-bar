@@ -73,6 +73,10 @@ SystemNavigationBar.navigationShow();
 #### `leanBack()`
 
 For full screen experience where the user will not interact heavily with the screen. You can browse the [documentation](https://developer.android.com/training/system-ui/immersive#leanback "documentation") for more information.
+
+| Type  | Reqired | Default |
+| ------------- | ------------- | ------------- |
+| boolean  | No | true |
 ```js
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 
@@ -82,6 +86,10 @@ SystemNavigationBar.leanBack();
 #### `immersive()`
 
 The immersive mode is intended for apps in which the user will be heavily interacting with the screen. You can browse the [documentation](https://developer.android.com/training/system-ui/immersive#immersive "documentation") for more information.
+
+| Type  | Reqired | Default |
+| ------------- | ------------- | ------------- |
+| boolean  | No | true |
 ```js
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 
@@ -91,6 +99,10 @@ SystemNavigationBar.immersive();
 #### `stickyImmersive()`
 
 In the regular immersive mode, any time a user swipes from an edge, the system takes care of revealing the system bars—your app won't even be aware that the gesture occurred. You can browse the [documentation](https://developer.android.com/training/system-ui/immersive#sticky-immersive "documentation") for more information.
+
+| Type  | Reqired | Default |
+| ------------- | ------------- | ------------- |
+| boolean  | No | true |
 ```js
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 
@@ -118,7 +130,7 @@ Hide or show the navigation bar and the status bar.
 
 | Type  | Reqired | Default |
 | ------------- | ------------- | ------------- |
-| boolean  | No | false |
+| boolean  | No | true |
 ```js
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 
@@ -128,6 +140,10 @@ SystemNavigationBar.fullScreen(true);
 #### `lowProfile()`
 
 The icons in the system and navigation bar are visually retracted. You can browse the [documentation](https://developer.android.com/training/system-ui/dim "documentation") for more information.
+
+| Type  | Reqired | Default |
+| ------------- | ------------- | ------------- |
+| boolean  | No | true |
 ```js
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 
@@ -147,6 +163,7 @@ Changes the color of the navigation bar. It also changes the style of the status
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 
 SystemNavigationBar.setNavigationColor('red');
+SystemNavigationBar.setNavigationColor('translucent');
 SystemNavigationBar.setNavigationColor('#FF0000', 'light');
 SystemNavigationBar.setNavigationColor(0xff00ff00, 'dark');
 SystemNavigationBar.setNavigationColor('blue', 'dark', 'status');
@@ -181,7 +198,7 @@ Sets whether the system should ensure that the navigation bar has enough contras
 
 | Type  | Reqired | Default |
 | ------------- | ------------- | ------------- |
-| boolean  | No | false |
+| boolean  | No | true |
 ```js
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 

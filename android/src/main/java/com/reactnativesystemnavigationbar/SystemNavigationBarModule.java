@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.os.Build;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowInsets;
 import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import androidx.annotation.NonNull;
@@ -29,6 +30,11 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
   public static final Integer NAVIGATION_BAR = 2;
   public static final Integer STATUS_BAR = 3;
   public static final Integer NAVIGATION_BAR_STATUS_BAR = 4;
+  private static final Integer INSETS_TYPE_HIDE = 5;
+  private static final Integer INSETS_TYPE_SHOW = 6;
+  private static final Integer INSETS_TYPE_APPEARANCE = 7;
+  private static final Integer INSETS_TYPE_APPEARANCE_CLEAR = 8;
+  private static final Integer INSETS_TYPE_BEHAVIOR = 9;
 
   public SystemNavigationBarModule(ReactApplicationContext reactContext) {
     super(reactContext);
@@ -55,77 +61,116 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
   /* Navigation Hide */
   @ReactMethod
   public void navigationHide(Promise promise) {
-    setSystemUIFlags(
-      View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
-      View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
-      View.SYSTEM_UI_FLAG_HIDE_NAVIGATION,
-      promise
-    );
-  }
-
-  /* Navigation Show */
-  @ReactMethod
-  public void navigationShow(Promise promise) {
-    setSystemUIFlags(View.SYSTEM_UI_FLAG_VISIBLE, promise);
-  }
-
-  @ReactMethod
-  public void fullScreen(Boolean enable, Promise promise) {
-    if (enable) {
-      setSystemUIFlags(
-        View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
-        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-        View.SYSTEM_UI_FLAG_IMMERSIVE |
-        View.SYSTEM_UI_FLAG_FULLSCREEN,
-        promise
-      );
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+      setSystemInsetsController(WindowInsets.Type.navigationBars(), INSETS_TYPE_HIDE, promise);
     } else {
       setSystemUIFlags(
-        View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
-        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN,
+        View.SYSTEM_UI_FLAG_FULLSCREEN |
+          View.SYSTEM_UI_FLAG_HIDE_NAVIGATION,
         promise
       );
     }
   }
 
+  /* Navigation Show */
+  @ReactMethod
+  public void navigationShow(Promise promise) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+      setSystemInsetsController(WindowInsets.Type.navigationBars(), INSETS_TYPE_SHOW, promise);
+    } else {
+      setSystemUIFlags(View.SYSTEM_UI_FLAG_VISIBLE, promise);
+    }
+  }
+
+  @ReactMethod
+  public void fullScreen(Boolean enabled, Promise promise) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+      int visibility = WindowInsets.Type.navigationBars() | WindowInsets.Type.statusBars();
+      int type = enabled ? INSETS_TYPE_HIDE : INSETS_TYPE_SHOW;
+      setSystemInsetsController(visibility, type, promise);
+    } else {
+      if (enabled) {
+        setSystemUIFlags(
+          View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+            View.SYSTEM_UI_FLAG_IMMERSIVE |
+            View.SYSTEM_UI_FLAG_FULLSCREEN,
+          promise
+        );
+      } else {
+        setSystemUIFlags(
+          View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN,
+          promise
+        );
+      }
+    }
+  }
+
   /* Lean Back */
   @ReactMethod
-  public void leanBack(Promise promise) {
-    setSystemUIFlags(
-      View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION,
-      promise
-    );
+  public void leanBack(Boolean enabled, Promise promise) {
+    if (enabled) {
+      setSystemUIFlags(
+        View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION,
+        promise
+      );
+    } else {
+      setSystemUIFlags(View.SYSTEM_UI_FLAG_VISIBLE, promise);
+    }
   }
 
   /* Immersive */
   @ReactMethod
   public void immersive(Promise promise) {
-    setSystemUIFlags(
-      View.SYSTEM_UI_FLAG_IMMERSIVE |
-      View.SYSTEM_UI_FLAG_FULLSCREEN |
-      View.SYSTEM_UI_FLAG_HIDE_NAVIGATION,
-      promise
-    );
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+      int visibility = WindowInsets.Type.navigationBars() | WindowInsets.Type.statusBars();
+      setSystemInsetsController(visibility, INSETS_TYPE_HIDE, promise);
+      setSystemInsetsController(WindowInsetsController.BEHAVIOR_SHOW_BARS_BY_SWIPE, INSETS_TYPE_BEHAVIOR, promise);
+    } else {
+      setSystemUIFlags(View.SYSTEM_UI_FLAG_IMMERSIVE |
+        View.SYSTEM_UI_FLAG_FULLSCREEN |
+        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION, promise);
+    }
   }
 
   /* Sticky Immersive */
   @ReactMethod
-  public void stickyImmersive(Promise promise) {
-    setSystemUIFlags(
-      View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
-      View.SYSTEM_UI_FLAG_FULLSCREEN |
-      View.SYSTEM_UI_FLAG_HIDE_NAVIGATION,
-      promise
-    );
+  public void stickyImmersive(Boolean enabled, Promise promise) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+      int visibility = WindowInsets.Type.navigationBars() | WindowInsets.Type.statusBars();
+      if (enabled) {
+        setSystemInsetsController(visibility, INSETS_TYPE_HIDE, promise);
+        setSystemInsetsController(WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE, INSETS_TYPE_BEHAVIOR, promise);
+      } else {
+        setSystemInsetsController(visibility, INSETS_TYPE_SHOW, promise);
+        setSystemInsetsController(WindowInsetsController.BEHAVIOR_SHOW_BARS_BY_SWIPE, INSETS_TYPE_APPEARANCE_CLEAR, promise);
+      }
+    } else {
+      if (enabled) {
+        setSystemUIFlags(
+          View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
+            View.SYSTEM_UI_FLAG_FULLSCREEN |
+            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION,
+          promise
+        );
+      } else {
+        setSystemUIFlags(View.SYSTEM_UI_FLAG_VISIBLE, promise);
+      }
+    }
   }
 
   /* Low Profile */
   @ReactMethod
-  public void lowProfile(Promise promise) {
-    setSystemUIFlags(View.SYSTEM_UI_FLAG_LOW_PROFILE, promise);
+  public void lowProfile(Boolean enabled, Promise promise) {
+    if (enabled) {
+      setSystemUIFlags(View.SYSTEM_UI_FLAG_LOW_PROFILE, promise);
+    } else {
+      setSystemUIFlags(View.SYSTEM_UI_FLAG_VISIBLE, promise);
+    }
   }
 
   @ReactMethod
@@ -240,6 +285,45 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
         () -> view.setNavigationBarContrastEnforced(enforceContrast)
       );
       promise.resolve("true");
+    } catch (IllegalViewOperationException e) {
+      e.printStackTrace();
+      promise.reject("Error: ", e.getMessage());
+    }
+  }
+
+  /* Private Method */
+  private void setSystemInsetsController(int visibility, Integer insetsType, Promise promise) {
+    try {
+      runOnUiThread(
+        () -> {
+          int requiredVersion = Build.VERSION_CODES.R;
+          if (Build.VERSION.SDK_INT < requiredVersion) {
+            promise.reject("Error: ", errorMessage(requiredVersion));
+            return;
+          }
+          Activity currentActivity = getCurrentActivity();
+          if (currentActivity == null) {
+            promise.reject("Error: ", "current activity is null");
+            return;
+          }
+          WindowInsetsController insetsController = currentActivity.getWindow().getInsetsController();
+
+          if (insetsController != null) {
+            if (insetsType.equals(INSETS_TYPE_HIDE)) {
+              insetsController.hide(visibility);
+            } else if (insetsType.equals(INSETS_TYPE_SHOW)) {
+              insetsController.show(visibility);
+            } else if (insetsType.equals(INSETS_TYPE_APPEARANCE)) {
+              insetsController.setSystemBarsAppearance(visibility, visibility);
+            } else if (insetsType.equals(INSETS_TYPE_APPEARANCE_CLEAR)) {
+              insetsController.setSystemBarsAppearance(0, visibility);
+            } else if (insetsType.equals(INSETS_TYPE_BEHAVIOR)) {
+              insetsController.setSystemBarsBehavior(visibility);
+            }
+          }
+          promise.resolve("true");
+        }
+      );
     } catch (IllegalViewOperationException e) {
       e.printStackTrace();
       promise.reject("Error: ", e.getMessage());

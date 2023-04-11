@@ -1,5 +1,5 @@
 {
-  "name": "react-native-system-navigation-bar-example",
+  "name": "SystemNavigationBarExample",
   "description": "Example app for react-native-system-navigation-bar",
   "version": "0.0.1",
   "private": true,
@@ -8,15 +8,14 @@
     "start": "react-native start"
   },
   "dependencies": {
-    "react": "18.1.0",
-    "react-native": "0.70.6"
+    "react": "18.2.0",
+    "react-native": "0.71.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/runtime": "^7.12.5",
-    "babel-plugin-module-resolver": "^4.1.0",
-    "eslint": "^7.32.0",
-    "metro-react-native-babel-preset": "0.72.3",
-    "react-test-renderer": "18.1.0"
+    "@babel/core": "^7.20.0",
+    "@babel/preset-env": "^7.20.0",
+    "@babel/runtime": "^7.20.0",
+    "metro-react-native-babel-preset": "0.73.9",
+    "babel-plugin-module-resolver": "^4.1.0"
   }
 }

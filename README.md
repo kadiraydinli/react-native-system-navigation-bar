@@ -137,6 +137,25 @@ import SystemNavigationBar from 'react-native-system-navigation-bar';
 SystemNavigationBar.fullScreen(true);
 ```
 
+**Note:** For notched devices, add the code below to `/android/app/src/main/res/values/styles.xml` in your project to include the cutout for the notch.
+
+```xml
+<item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+```
+
+After adding the code, the estimated content of the `styles.yml` file will be as follows.
+
+```xml
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+    </style>
+</resources>
+```
+
+Check out the [documentation](https://developer.android.com/develop/ui/views/layout/display-cutout) for more information about this code.
+
 #### `lowProfile()`
 
 The icons in the system and navigation bar are visually retracted. You can browse the [documentation](https://developer.android.com/training/system-ui/dim "documentation") for more information.

@@ -109,6 +109,30 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
         );
       }
     }
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+      final Activity currentActivity = getCurrentActivity();
+      if (currentActivity == null) {
+        promise.reject("Error: ", "current activity is null");
+        return;
+      }
+      final Window view = currentActivity.getWindow();
+      runOnUiThread(
+        () -> {
+          view.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+          view.clearFlags(
+            WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+          );
+
+          if (enabled) {
+            view.setFlags(
+              WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+              WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+            );
+          }
+        }
+      );
+    }
   }
 
   /* Lean Back */

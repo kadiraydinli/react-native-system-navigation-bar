@@ -63,7 +63,7 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
   public void navigationHide(Promise promise) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
       setSystemInsetsController(WindowInsets.Type.navigationBars(), INSETS_TYPE_HIDE, promise);
-    } else {
+    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
       setSystemUIFlags(
         View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
           | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -89,7 +89,7 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
       int visibility = WindowInsets.Type.navigationBars() | WindowInsets.Type.statusBars();
       int type = enabled ? INSETS_TYPE_HIDE : INSETS_TYPE_SHOW;
       setSystemInsetsController(visibility, type, promise);
-    } else {
+    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
       if (enabled) {
         setSystemUIFlags(
           View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
@@ -131,7 +131,7 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
       int visibility = WindowInsets.Type.navigationBars() | WindowInsets.Type.statusBars();
       setSystemInsetsController(visibility, INSETS_TYPE_HIDE, promise);
       setSystemInsetsController(WindowInsetsController.BEHAVIOR_SHOW_BARS_BY_SWIPE, INSETS_TYPE_BEHAVIOR, promise);
-    } else {
+    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
       setSystemUIFlags(View.SYSTEM_UI_FLAG_IMMERSIVE |
         View.SYSTEM_UI_FLAG_FULLSCREEN |
         View.SYSTEM_UI_FLAG_HIDE_NAVIGATION, promise);
@@ -150,7 +150,7 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
         setSystemInsetsController(visibility, INSETS_TYPE_SHOW, promise);
         setSystemInsetsController(WindowInsetsController.BEHAVIOR_SHOW_BARS_BY_SWIPE, INSETS_TYPE_APPEARANCE_CLEAR, promise);
       }
-    } else {
+    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
       if (enabled) {
         setSystemUIFlags(
           View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |

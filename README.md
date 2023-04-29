@@ -19,12 +19,12 @@ React Native lets you customize the navigation bar for Android.
             Immersive <br />
             <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/immersive.gif?raw=true" width="200" />
         </td>
+    </tr>
+    <tr>
         <td align="center">
             Sticky Immersive<br />
             <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/sticky-immersive.gif?raw=true" width="200" />
         </td>
-    </tr>
-    <tr>
         <td align="center">
             Low Profile<br />
             <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/low-profile.gif?raw=true" width="200" />
@@ -33,6 +33,8 @@ React Native lets you customize the navigation bar for Android.
             Navigation Color<br />
             <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/navigation-color.gif?raw=true" width="200" />
         </td>
+    </tr>
+    <tr>
         <td align="center">
             Navigation Bar Divider Color<br />
             <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/divider-color.gif?raw=true" width="200" />
@@ -41,7 +43,11 @@ React Native lets you customize the navigation bar for Android.
             Bar Mode<br />
             <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/bar-mode.gif?raw=true" width="200" />
         </td>
-  </tr>
+        <td align="center">
+            Fits System Windows<br />
+            <img src="https://github.com/kadiraydinli/react-native-system-navigation-bar/blob/master/screenshots/fits-systems-windows.gif?raw=true" width="200" />
+        </td>
+    </tr>
   </table>
 
 
@@ -212,6 +218,20 @@ import SystemNavigationBar, { GetBarColorType } from 'react-native-system-naviga
 
 const barColors: GetBarColorType = await SystemNavigationBar.getBarColor('both');
 // { "status": "#757575", "navigation": "#FF0000" }
+```
+
+#### `setFitsSystemWindows()`
+
+Boolean internal attribute to adjust view layout based on system windows such as the navigation bar. You can browse the [documentation](https://developer.android.com/reference/android/view/View#attr_android:fitsSystemWindows "documentation") for more information.
+
+| Type  | Reqired | Default |
+| ------------- | ------------- | ------------- |
+| boolean  | No | true |
+```js
+import SystemNavigationBar from 'react-native-system-navigation-bar';
+
+SystemNavigationBar.setFitsSystemWindows();
+SystemNavigationBar.setFitsSystemWindows(false);
 ```
 
 #### `setNavigationBarDividerColor()`

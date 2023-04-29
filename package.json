@@ -54,7 +54,11 @@
     "navigation-bar-divider-color",
     "contrast-enforced",
     "navigation-bar-contrast-enforced",
-    "full-screen"
+    "full-screen",
+    "setFitsSystemWindows",
+    "fitsSystemWindows",
+    "decorFitsSystemWindows",
+    "setDecorFitsSystemWindows"
   ],
   "repository": "https://github.com/kadiraydinli/react-native-system-navigation-bar",
   "author": "Kadir Aydınlı <kadiraydinli.4@gmail.com> (https://github.com/kadiraydinli)",

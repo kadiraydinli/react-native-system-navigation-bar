@@ -11,6 +11,8 @@ import android.view.WindowInsets;
 import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import androidx.annotation.NonNull;
+import androidx.core.view.WindowCompat;
+
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -268,6 +270,33 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void setFitsSystemWindows(
+    Boolean enabled,
+    Promise promise
+  ) {
+    try {
+      int requiredVersion = Build.VERSION_CODES.LOLLIPOP;
+      if (Build.VERSION.SDK_INT < requiredVersion) {
+        throw new IllegalViewOperationException(errorMessage(requiredVersion));
+      }
+      final Activity currentActivity = getCurrentActivity();
+      if (currentActivity == null) {
+        throw new IllegalViewOperationException("current activity is null");
+      }
+      final Window view = currentActivity.getWindow();
+      runOnUiThread(
+        () -> {
+          WindowCompat.setDecorFitsSystemWindows(view, enabled);
+        }
+      );
+      promise.resolve("true");
+    } catch (IllegalViewOperationException e) {
+      e.printStackTrace();
+      promise.reject("Error: ", e.getMessage());
+    }
+  }
+
+  @ReactMethod
   public void getBarColor(Integer bar, Promise promise) {
     runOnUiThread(() -> {
       try {
@@ -325,7 +354,7 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
             .getDecorView()
             .setSystemUiVisibility(
               WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS |
-              WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
             );
         }
       );

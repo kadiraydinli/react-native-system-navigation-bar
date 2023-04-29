@@ -116,7 +116,18 @@ export default function App() {
           const result: GetBarColorType = await SystemNavigationBar.getBarColor(
             'both'
           );
-          console.log('Get Bar Color: ', JSON.stringify(result));
+          console.log(
+            'Get Bar Color: ',
+            JSON.stringify(result as GetBarColorType)
+          );
+        }}
+      />
+
+      <Button
+        title="setFitsSystemWindows"
+        onPress={async () => {
+          const result = await SystemNavigationBar.setFitsSystemWindows(false);
+          console.log('setFitsSystemWindows: ', result);
         }}
       />
     </View>

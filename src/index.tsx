@@ -131,6 +131,13 @@ const getBarColor = async (
   return '';
 };
 
+const setFitsSystemWindows = async (enabled?: boolean) => {
+  if (Platform.OS === 'android') {
+    const state = typeof enabled === 'boolean' ? enabled : true;
+    return await NavigationBar.setFitsSystemWindows(state);
+  }
+};
+
 var SystemNavigationBar = {
   navigationHide,
   navigationShow,
@@ -144,6 +151,7 @@ var SystemNavigationBar = {
   setNavigationBarContrastEnforced,
   fullScreen,
   getBarColor,
+  setFitsSystemWindows,
 };
 
 export default SystemNavigationBar;

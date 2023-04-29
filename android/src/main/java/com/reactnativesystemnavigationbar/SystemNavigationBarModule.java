@@ -3,6 +3,7 @@ package com.reactnativesystemnavigationbar;
 import static com.facebook.react.bridge.UiThreadUtil.runOnUiThread;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
 import android.view.Window;
@@ -233,6 +234,18 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
           );
 
           if (isTranslucent) {
+            view.setFlags(
+              WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+              WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+            );
+          }
+
+          boolean isTransparent = color.equals(Color.TRANSPARENT) && !isTranslucent;
+          if (isTransparent) {
+            view.setFlags(
+              WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+              WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+            );
             view.setFlags(
               WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
               WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION

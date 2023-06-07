@@ -11,7 +11,6 @@ import android.view.WindowInsets;
 import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import androidx.annotation.NonNull;
-import androidx.core.view.WindowCompat;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -286,7 +285,15 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
       final Window view = currentActivity.getWindow();
       runOnUiThread(
         () -> {
-          WindowCompat.setDecorFitsSystemWindows(view, enabled);
+          if (!enabled) {
+            view.getDecorView().setSystemUiVisibility(
+              View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            );
+          } else {
+            view.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+          }
         }
       );
       promise.resolve("true");

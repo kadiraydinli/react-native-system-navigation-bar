@@ -156,7 +156,7 @@ SystemNavigationBar.fullScreen(true);
 <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
 ```
 
-After adding the code, the estimated content of the `styles.yml` file will be as follows.
+After adding the code, the estimated content of the `styles.xml` file will be as follows.
 
 ```xml
 <resources>

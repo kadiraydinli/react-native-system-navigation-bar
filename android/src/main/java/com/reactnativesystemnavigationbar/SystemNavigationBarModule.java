@@ -276,11 +276,11 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
     try {
       int requiredVersion = Build.VERSION_CODES.LOLLIPOP;
       if (Build.VERSION.SDK_INT < requiredVersion) {
-        throw new IllegalViewOperationException(errorMessage(requiredVersion));
+        promise.reject("Error: ", errorMessage(requiredVersion));
       }
       final Activity currentActivity = getCurrentActivity();
       if (currentActivity == null) {
-        throw new IllegalViewOperationException("current activity is null");
+        promise.reject("Error: ", "current activity is null");
       }
       final Window view = currentActivity.getWindow();
       runOnUiThread(
@@ -466,9 +466,6 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
   }
 
   private void setModeStyle(Boolean light, Integer bar) {
-    if (getCurrentActivity() == null) {
-      throw new IllegalViewOperationException("current activity is null");
-    }
     int visibility = 0;
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -518,6 +515,9 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
     try {
       runOnUiThread(
         () -> {
+          if (getCurrentActivity() == null) {
+            promise.reject("Error: ", "current activity is null");
+          }
           setModeStyle(light, bar);
           promise.resolve("true");
         }

@@ -60,7 +60,10 @@
     "decorFitsSystemWindows",
     "setDecorFitsSystemWindows"
   ],
-  "repository": "https://github.com/kadiraydinli/react-native-system-navigation-bar",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kadiraydinli/react-native-system-navigation-bar.git"
+  },
   "author": "Kadir Aydınlı <kadiraydinli.4@gmail.com> (https://github.com/kadiraydinli)",
   "license": "MIT",
   "bugs": {

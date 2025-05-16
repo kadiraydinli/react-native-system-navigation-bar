@@ -468,10 +468,15 @@ public class SystemNavigationBarModule extends ReactContextBaseJavaModule {
   }
 
   private void setModeStyle(Boolean light, Integer bar) {
+    Activity currentActivity = getCurrentActivity();
+    if (currentActivity == null) {
+      return;
+    }
+
     int visibility = 0;
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-      WindowInsetsController insetsController = getCurrentActivity().getWindow().getInsetsController();
+      WindowInsetsController insetsController = currentActivity.getWindow().getInsetsController();
       int navigationBarAppearance = WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS;
       int statusBarAppearance = WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
       int bothBarAppearance = statusBarAppearance | navigationBarAppearance;

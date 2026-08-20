@@ -211,18 +211,26 @@ class SystemNavigationBarModule(reactContext: ReactApplicationContext) :
     // can diverge from WindowManager's modern appearance, so use the platform
     // controller directly to match React Native on API 31+.
     if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) {
-      val statusBars = WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
-      val navigationBars = WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
-      val mask = when (bar) {
-        BAR_STATUS -> statusBars
-        BAR_NAVIGATION -> navigationBars
-        else -> statusBars or navigationBars
+      // The platform controller only exists once the decor view is attached to a
+      // ViewRootImpl. Before that it is null, and falling through to the compat
+      // path leaves the legacy flag behind for the platform to apply on attach —
+      // resolving the promise without touching the window would turn an early
+      // setBarStyle call into a silent no-op.
+      val platformController = window.insetsController
+      if (platformController != null) {
+        val statusBars = WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        val navigationBars = WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+        val mask = when (bar) {
+          BAR_STATUS -> statusBars
+          BAR_NAVIGATION -> navigationBars
+          else -> statusBars or navigationBars
+        }
+        platformController.setSystemBarsAppearance(
+          if (darkIcons) mask else 0,
+          mask,
+        )
+        return
       }
-      window.insetsController?.setSystemBarsAppearance(
-        if (darkIcons) mask else 0,
-        mask,
-      )
-      return
     }
 
     val controller = insetsControllerOf(window)

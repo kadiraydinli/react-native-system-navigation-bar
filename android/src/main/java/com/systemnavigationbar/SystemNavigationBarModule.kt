@@ -140,7 +140,8 @@ class SystemNavigationBarModule(reactContext: ReactApplicationContext) :
 
   override fun isEdgeToEdgeEnabled(promise: Promise) {
     val requested = edgeToEdgeWindow != null &&
-      edgeToEdgeWindow == currentActivity?.window?.let(System::identityHashCode)
+      edgeToEdgeWindow ==
+      reactApplicationContext.currentActivity?.window?.let(System::identityHashCode)
     promise.resolve(isEdgeToEdgeEnforced() || requested)
   }
 
@@ -173,7 +174,7 @@ class SystemNavigationBarModule(reactContext: ReactApplicationContext) :
    * or with the thrown exception.
    */
   private fun withWindow(promise: Promise, block: (Window) -> Any?) {
-    val activity = currentActivity
+    val activity = reactApplicationContext.currentActivity
     if (activity == null) {
       promise.reject("E_NO_ACTIVITY", "Cannot change system bars: no current Activity.")
       return

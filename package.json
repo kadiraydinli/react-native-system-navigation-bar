@@ -1,6 +1,6 @@
 {
   "name": "react-native-system-navigation-bar",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Control the Android system navigation and status bars from React Native: hide and show, immersive modes, colors and icon styles, edge-to-edge detection — with iOS home indicator support.",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",

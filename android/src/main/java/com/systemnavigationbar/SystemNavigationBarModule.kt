@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Build
 import android.provider.Settings
 import android.view.Window
+import android.view.WindowInsetsController
 import android.view.WindowManager
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -205,6 +206,33 @@ class SystemNavigationBarModule(reactContext: ReactApplicationContext) :
   }
 
   private fun applyBarAppearance(window: Window, darkIcons: Boolean, bar: String) {
+    // WindowInsetsControllerCompat may synchronize light-bar appearance through
+    // legacy systemUiVisibility flags. On some Android 12+ OEM builds, those flags
+    // can diverge from WindowManager's modern appearance, so use the platform
+    // controller directly to match React Native on API 31+.
+    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) {
+      // The platform controller only exists once the decor view is attached to a
+      // ViewRootImpl. Before that it is null, and falling through to the compat
+      // path leaves the legacy flag behind for the platform to apply on attach —
+      // resolving the promise without touching the window would turn an early
+      // setBarStyle call into a silent no-op.
+      val platformController = window.insetsController
+      if (platformController != null) {
+        val statusBars = WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        val navigationBars = WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+        val mask = when (bar) {
+          BAR_STATUS -> statusBars
+          BAR_NAVIGATION -> navigationBars
+          else -> statusBars or navigationBars
+        }
+        platformController.setSystemBarsAppearance(
+          if (darkIcons) mask else 0,
+          mask,
+        )
+        return
+      }
+    }
+
     val controller = insetsControllerOf(window)
     if (bar != BAR_NAVIGATION) controller.isAppearanceLightStatusBars = darkIcons
     if (bar != BAR_STATUS) controller.isAppearanceLightNavigationBars = darkIcons
